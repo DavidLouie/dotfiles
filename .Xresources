@@ -1,6 +1,10 @@
 ! ===== URxvt config =====
 URxvt.scrollBar: false
-URxvt.font: xft: Tamzen:style=Regular:pixelsize=16
+URxvt.font: xft: Tamzen:style=Regular:pixelsize=16, \
+            xft: TerminessTTFNerdFontMono:size=12
+
+*.font:     Tamzen:pixelsize=16, \
+            xft: TerminessTTFNerdFontMono:size=12
 
 ! remap copy paste bindings
 URxvt.perl-ext-common: default

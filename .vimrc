@@ -1,6 +1,6 @@
 set nocompatible
 filetype indent plugin on
-syntax on
+syntax enable 
 set hidden
 set wildmenu
 set showcmd
@@ -17,6 +17,7 @@ set visualbell
 set t_vb=
 set mouse=a
 set cmdheight=2
+set encoding=UTF-8
 
 " colors to match Xresources
 set t_Co=16
@@ -44,6 +45,7 @@ map <F2> :Lexplore<CR>
 call  plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
 Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
@@ -55,12 +57,26 @@ nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>h :History<CR>
 nnoremap <silent> <Leader>g :Rg<CR>
 
+" ===== Lightline =====
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+  autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
 " ===== BEGIN COC CONFIG =====
 set nobackup
 set nocompatible
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+highlight clear signcolumn
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -90,6 +106,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gv :call CocAction('jumpDefinition', 'vsplit')<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -106,7 +123,9 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+" set linting fg text to be a readable color
+" highlight CocFloating ctermbg=4
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -178,3 +197,6 @@ map Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 vnoremap <C-c> "+y
 map <C-v> "+p
+
+" must be at end to disable properly
+set noshowmode

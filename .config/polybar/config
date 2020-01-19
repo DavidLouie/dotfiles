@@ -50,7 +50,7 @@ font-0 = "Misc Tamsyn:size=16;1"
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = Siji:pixelsize=10;1
 
-modules-left = i3
+modules-left = bspwm
 modules-center = mpd
 modules-right = pulseaudio memory cpu date powermenu
 
@@ -59,6 +59,8 @@ tray-padding = 2
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+wm-restack = bspwm
 
 [module/filesystem]
 type = internal/fs
@@ -98,6 +100,27 @@ label-visible-padding = ${self.label-focused-padding}
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 1
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 1
+
+label-occupied = %index%
+label-occupied-padding = 1
+
+label-urgent = %index%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty =
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+
+; Separator in between workspaces
+; label-separator = |
 
 [module/cpu]
 type = internal/cpu
@@ -147,7 +170,7 @@ label = %date% %time%
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
+format-volume = <label-volume>
 label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
 
@@ -240,5 +263,5 @@ screenchange-reload = true
 pseudo-transparency = false
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 0
+margin-bottom = 0
